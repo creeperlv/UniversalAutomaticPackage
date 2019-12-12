@@ -6,5 +6,9 @@ namespace UniversalAutomaticPackage.PackageSystem.Local
 {
     public class CompressedPackage:BasePackage
     {
+        public CompressedPackage(string location)
+        {
+            //ICSharpCode.SharpZipLib.Core.
+        }
     }
 }

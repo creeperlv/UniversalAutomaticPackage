@@ -6,5 +6,8 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
 {
     public class EntirePackage : BasePackage
     {
+        public EntirePackage(string location)
+        {
+        }
     }
 }

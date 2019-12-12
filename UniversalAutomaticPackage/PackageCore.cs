@@ -1,5 +1,6 @@
 ﻿using System;
 using UniversalAutomaticPackage.PackageSystem;
+using UniversalAutomaticPackage.PackageSystem.Local;
 using UniversalAutomaticPackage.PackageSystem.Remote;
 
 namespace UniversalAutomaticPackage
@@ -19,6 +20,14 @@ namespace UniversalAutomaticPackage
                 {
                     return new ManifestPackage(RemoteRequest[0]);
                 }
+                else
+                {
+                    return new EntirePackage(RemoteRequest[0]);
+                }
+            }
+            else
+            {
+                return new CompressedPackage(location);
             }
         }
     }
