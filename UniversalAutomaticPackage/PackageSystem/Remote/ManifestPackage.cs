@@ -16,9 +16,10 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
          * PackageHomePage=[URL]
          * PackageType=[Source|Binary]
          * InstallationScript=[URL]
-         * 
+         * LicenseURL=[Url]
          */
         PackageInformation PackageInformation = new PackageInformation();
+        string InstallationScript = "";
         public ManifestPackage(string location)
         {
             var progress = LiteManagedHttpDownload.Downloader.DownloadToText(location, "");
@@ -44,8 +45,29 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
                 {
                     PackageInformation.PackageID = Guid.Parse(line.Substring("PackageID=".Length));
                 }
+                else if (line.StartsWith("PackageType="))
+                {
+                    PackageInformation.PackageType = (PackageType)Enum.Parse(typeof(PackageType), line.Substring("PackageType=".Length));
+                }
+                else if (line.StartsWith("LicenseURL="))
+                {
+                    PackageInformation.LicenseURL = line.Substring("LicenseURL=".Length);
+                }
+                else if (line.StartsWith("InstallationScript="))
+                {
+                    InstallationScript = line.Substring("InstallationScript=".Length);
+                }
                 //Process...
             }
+            PackageInformation.UpdateOrigin = location;
+        }
+        public override PackageInformation GetInfomation()
+        {
+            return PackageInformation;
+        }
+        public override InstallationResult Install(ref double Progress)
+        {
+            return base.Install(ref Progress);
         }
     }
 }
