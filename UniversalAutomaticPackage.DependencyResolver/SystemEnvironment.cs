@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace UniversalAutomaticPackage
+namespace UniversalAutomaticPackage.DependencyResolver
 {
     public enum SystemType
     {
@@ -11,6 +9,6 @@ namespace UniversalAutomaticPackage
     public class SystemEnvironment
     {
         public static SystemType currentSystem = SystemType.Windows;
-        public static Version SystemVersion = new Version(10,0,10240);
+        public static Version SystemVersion = new Version(10, 0, 10240);
     }
 }

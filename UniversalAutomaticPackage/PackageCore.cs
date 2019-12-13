@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using UniversalAutomaticPackage.DependencyResolver;
 using UniversalAutomaticPackage.PackageSystem;
 using UniversalAutomaticPackage.PackageSystem.Local;
 using UniversalAutomaticPackage.PackageSystem.Remote;
@@ -27,7 +28,7 @@ namespace UniversalAutomaticPackage
             {
                 case SystemType.Windows:
                     {
-                        var ver=RuntimeInformation.OSDescription.Substring("Microsoft Windows ".Length);
+                        var ver = RuntimeInformation.OSDescription.Substring("Microsoft Windows ".Length);
                         SystemEnvironment.SystemVersion = new Version(ver);
                     }
                     break;

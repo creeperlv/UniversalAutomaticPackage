@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using UniversalAutomaticPackage.DependencyResolver;
 
 namespace UniversalAutomaticPackage.ScriptSystem.Functions
 {
@@ -13,6 +14,62 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
             UAPScript.functions.Add("ScriptType", ScriptType);
             UAPScript.functions.Add("Environment", CheckEnvironment);
             UAPScript.functions.Add("Set-Main-Executable", SetMainExecutable);
+            UAPScript.functions.Add("Dependencies", CheckDependencies);
+        }
+        public static void CopyFolder(string src,string target)
+        {
+            DirectoryInfo source = new DirectoryInfo(src);
+            DirectoryInfo tgt= new DirectoryInfo(target);
+            if (!tgt.Exists) tgt.Create();
+            {
+                var folders = source.EnumerateDirectories();
+                foreach (var item in folders)
+                {
+                    var sub=tgt.CreateSubdirectory(item.Name);
+                    CopyFolder(item.FullName, sub.FullName);
+                }
+
+            }
+            {
+                var folders = source.EnumerateFiles();
+                foreach (var item in folders)
+                {
+                    item.CopyTo(Path.Combine(tgt.FullName, item.Name), true);
+                }
+            }
+        }
+        public static bool CopyFolder(string s,UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
+        {
+            string src="";
+            string tgt="";
+            foreach (var item in parameters)
+            {
+                if (item.Key == "-Source")
+                {
+                    src = item.Value;
+                }else
+                if (item.Key == "-Target")
+                {
+                    src = item.Value;
+                }
+            }
+            try
+            {
+                CopyFolder(src, tgt);
+                return true;
+            }
+            catch (Exception)
+            {
+            }
+            return false;
+        }
+        static bool CheckDependencies(string s, UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
+        {
+            foreach (var item in parameters)
+            {
+                 
+            }
+            return true;
         }
         static bool ScriptType(string s,UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
         {

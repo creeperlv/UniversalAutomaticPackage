@@ -73,7 +73,7 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
             if(!directoryInfo.Exists) directoryInfo.Create();
             //UAPScriptEnv.WorkingDirectory = directoryInfo;
             LiteManagedHttpDownload.Downloader.DownloadToFileAsync(InstallationScript, Path.Combine(directoryInfo.FullName,"InstalScript.uapscript"));
-            UAPScript script = new UAPScript(Path.Combine(directoryInfo.FullName, "InstalScript.uapscript"));
+            UAPScript script = new UAPScript(Path.Combine(directoryInfo.FullName, "InstalScript.uapscript"),this);
             script.WorkingDirectory = directoryInfo.CreateSubdirectory("WorkingSpace");
             var d=directoryInfo.CreateSubdirectory("TargetBinaries");
             script.Execute();

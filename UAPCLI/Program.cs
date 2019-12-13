@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using UniversalAutomaticPackage;
+using UniversalAutomaticPackage.DependencyResolver;
 using UniversalAutomaticPackage.PackageSystem.Remote;
 using UniversalAutomaticPackage.ScriptSystem;
 using UniversalAutomaticPackage.ScriptSystem.Functions;
