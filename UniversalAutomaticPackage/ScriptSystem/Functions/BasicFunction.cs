@@ -67,7 +67,13 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
         {
             foreach (var item in parameters)
             {
-                 
+                SingleDependency dependency = new SingleDependency(item.Key, item.Value);
+                if (!dependency.Check())
+                {
+                    Host.SetForeground(ConsoleColor.Red);
+                    Host.WriteLine("Missing dependency:"+item.Key);
+                    Host.SetForeground(ConsoleColor.White);
+                }
             }
             return true;
         }
