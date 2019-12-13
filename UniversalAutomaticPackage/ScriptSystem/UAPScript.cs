@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UniversalAutomaticPackage.PackageSystem;
 
 namespace UniversalAutomaticPackage.ScriptSystem
 {
     public class UAPScript
     {
+        public BasePackage Parent;
         public DirectoryInfo WorkingDirectory;
-        public static Dictionary<string, Func<string, UAPScript, Dictionary<string, string>,bool>> functions = new Dictionary<string, Func<string, UAPScript, Dictionary<string, string>, bool>>();
+        public static Dictionary<string, Func<string, UAPScript, List<KeyValuePair<string,string>>,bool>> functions = new Dictionary<string, Func<string, UAPScript, List<KeyValuePair<string, string>>, bool>>();
         string file;
-        public UAPScript(string file)
+        public UAPScript(string file,BasePackage basePackage)
         {
+            Parent = basePackage;
             this.file = file;
         }
         public void Execute()
         {
             var lines = File.ReadAllLines(file);
-            Dictionary<string, string> para = new Dictionary<string, string>();
-            Func<string, UAPScript, Dictionary<string, string>, bool> func=null;
+            List<KeyValuePair<string, string>> para = new List<KeyValuePair<string, string>>();
+            Func<string, UAPScript, List<KeyValuePair<string, string>>, bool> func=null;
             string para1="";
             int lineNumber = 0;
             for (int i = 0; i < lines.Length; i++)
@@ -29,16 +32,16 @@ namespace UniversalAutomaticPackage.ScriptSystem
                     {
                         var key = lines[i].Substring(0, lines[i].IndexOf(":"));
                         var value = lines[i].Substring(lines[i].IndexOf(":") + 1);
-                        para.Add(key, value);
+                        para.Add(new KeyValuePair<string, string>(key, value));
                     }
                     else
                     {
-                        para.Add("" + lineNumber, lines[i]);
+                        para.Add(new KeyValuePair<string, string>("" + lineNumber, lines[i]));
                         lineNumber++;
                     }
                 }
                 else{
-                    para = new Dictionary<string, string>();
+                    para = new List<KeyValuePair<string, string>>();
                     if (func != null)
                     {
                         if(func(para1, this, para) != true)

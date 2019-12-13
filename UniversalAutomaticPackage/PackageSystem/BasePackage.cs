@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace UniversalAutomaticPackage.PackageSystem
@@ -8,6 +9,7 @@ namespace UniversalAutomaticPackage.PackageSystem
     {
         public InstallationStatus Status;
         public string DetailedMessage;
+        public DirectoryInfo BinFolder;
     }
     public enum InstallationStatus
     {
@@ -55,6 +57,7 @@ namespace UniversalAutomaticPackage.PackageSystem
     }
     public class BasePackage
     {
+        public string MainExecutable;
         /// <summary>
         /// Install method.
         /// </summary>
@@ -64,6 +67,7 @@ namespace UniversalAutomaticPackage.PackageSystem
         {
             return new InstallationResult() { Status = InstallationStatus.Fail, DetailedMessage = "Not implemented." };
         }
+
         public virtual PackageInformation GetInfomation()
         {
             return new PackageInformation();

@@ -11,5 +11,6 @@ namespace UniversalAutomaticPackage
     public class SystemEnvironment
     {
         public static SystemType currentSystem = SystemType.Windows;
+        public static Version SystemVersion = new Version(10,0,10240);
     }
 }

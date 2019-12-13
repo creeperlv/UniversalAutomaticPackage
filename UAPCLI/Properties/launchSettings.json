@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "UAPCLI": {
+      "commandName": "Project",
+      "commandLineArgs": "version"
+    }
+  }
+}

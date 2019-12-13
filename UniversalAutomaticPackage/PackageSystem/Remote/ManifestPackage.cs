@@ -62,6 +62,7 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
             }
             PackageInformation.UpdateOrigin = location;
         }
+        
         public override PackageInformation GetInfomation()
         {
             return PackageInformation;
@@ -74,8 +75,12 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
             LiteManagedHttpDownload.Downloader.DownloadToFileAsync(InstallationScript, Path.Combine(directoryInfo.FullName,"InstalScript.uapscript"));
             UAPScript script = new UAPScript(Path.Combine(directoryInfo.FullName, "InstalScript.uapscript"));
             script.WorkingDirectory = directoryInfo.CreateSubdirectory("WorkingSpace");
-            directoryInfo.CreateSubdirectory("TargetBinaries");
-            return base.Install(ref Progress);
+            var d=directoryInfo.CreateSubdirectory("TargetBinaries");
+            script.Execute();
+            InstallationResult installationResult = new InstallationResult();
+            installationResult.BinFolder = d;
+            installationResult.Status = InstallationStatus.Succeed;
+            return installationResult;
         }
     }
 }

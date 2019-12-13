@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using UniversalAutomaticPackage;
 using UniversalAutomaticPackage.PackageSystem.Remote;
 using UniversalAutomaticPackage.ScriptSystem;
@@ -10,10 +11,51 @@ namespace UAPCLI
     class Program
     {
         public static readonly Version CLIVerion = new Version(0, 0, 1, 0);
-
+        static void ShowHelpContent()
+        {
+            Console.WriteLine("Usage: UAPCLI [FUNCTION]");
+            Console.WriteLine("Functions:");
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("\tINSTALL");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\t<Package-To-Install>");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\tInstall package from given path. It can be a file in your disk or a effective url.");
+            }
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("\tREMOVE");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\t<Package-To-Remove>");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\tRemove a package by GUID or name.");
+            }
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("\tINIT");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\tInitialize the environment.");
+            }
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("\tVERSION");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\tVersion UAP version.");
+            }
+        }
+        static void Side()
+        {
+            //RuntimeInformation.OSArchitecture == Architecture.X64
+            Console.WriteLine(RuntimeInformation.OSDescription);
+            System.Diagnostics.PerformanceCounter performance = new System.Diagnostics.PerformanceCounter();
+            Console.WriteLine(SystemEnvironment.SystemVersion.ToString());
+        }
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.White;
             PackageCore packageCore = new PackageCore();
+            Side();
             string AppFolder = "./UAP";
             switch (SystemEnvironment.currentSystem)
             {
@@ -43,6 +85,7 @@ namespace UAPCLI
                         try
                         {
                             var package = packageCore.LoadPackage(args[i]);
+                            var pkginfo = package.GetInfomation();
                             Console.WriteLine("Install from:" + args[i]);
                             if (package is ManifestPackage)
                             {
@@ -56,8 +99,11 @@ namespace UAPCLI
                             var result=package.Install(ref p);
                             if(result.Status!= UniversalAutomaticPackage.PackageSystem.InstallationStatus.Fail)
                             {
-
-                                Console.WriteLine("Move from TemporaryFolder to assigned folder");
+                                DirectoryInfo AppsFolder = new DirectoryInfo(AppFolder);
+                                //package
+                                var pkg = Path.Combine(AppsFolder.FullName,pkginfo.PackageID.ToString());
+                                Directory.Move(result.BinFolder.FullName, pkg);
+                                Console.WriteLine("Moveing from TemporaryFolder to assigned folder");
                             }
                         }
                         catch (Exception)
@@ -65,6 +111,22 @@ namespace UAPCLI
                         }
                         break;
                     case "REMOVE":
+                        {
+
+                        }
+                        break;
+                    case "VERSION":
+                        {
+                            Console.Write("UAP,Core:");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine(PackageCore.CoreVersion.ToString());
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("UAP,CLI:");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine(CLIVerion.ToString());
+                            Console.ForegroundColor = ConsoleColor.White;
+
+                        }
                         break;
                     case "INIT":
                         if (!Directory.Exists(AppFolder)) { Directory.CreateDirectory(AppFolder); }
@@ -75,6 +137,7 @@ namespace UAPCLI
             }
             if (args.Length == 0)
             {
+                ShowHelpContent();
             }
         }
     }

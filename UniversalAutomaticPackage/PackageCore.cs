@@ -23,6 +23,26 @@ namespace UniversalAutomaticPackage
             {
                 SystemEnvironment.currentSystem = SystemType.MacOS;
             }
+            switch (SystemEnvironment.currentSystem)
+            {
+                case SystemType.Windows:
+                    {
+                        var ver=RuntimeInformation.OSDescription.Substring("Microsoft Windows ".Length);
+                        SystemEnvironment.SystemVersion = new Version(ver);
+                    }
+                    break;
+                case SystemType.Linux:
+                    {
+                        var ver = RuntimeInformation.OSDescription.Substring("Linux ".Length);
+                        ver = ver.Substring(0, ver.IndexOf("-"));
+                        SystemEnvironment.SystemVersion = new Version(ver);
+                    }
+                    break;
+                case SystemType.MacOS:
+                    break;
+                default:
+                    break;
+            }
         }
         public BasePackage LoadPackage(string location)
         {
