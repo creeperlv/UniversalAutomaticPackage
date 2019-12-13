@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29521.150
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalAutomaticPackage", "UniversalAutomaticPackage\UniversalAutomaticPackage.csproj", "{FE4F2B21-DD93-4583-960E-D29D15B27252}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalAutomaticPackage", "UniversalAutomaticPackage\UniversalAutomaticPackage.csproj", "{FE4F2B21-DD93-4583-960E-D29D15B27252}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAPCLI", "UAPCLI\UAPCLI.csproj", "{6F1325CD-D14B-4FC9-91B6-B766B2639885}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{FE4F2B21-DD93-4583-960E-D29D15B27252}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE4F2B21-DD93-4583-960E-D29D15B27252}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE4F2B21-DD93-4583-960E-D29D15B27252}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F1325CD-D14B-4FC9-91B6-B766B2639885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F1325CD-D14B-4FC9-91B6-B766B2639885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F1325CD-D14B-4FC9-91B6-B766B2639885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F1325CD-D14B-4FC9-91B6-B766B2639885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

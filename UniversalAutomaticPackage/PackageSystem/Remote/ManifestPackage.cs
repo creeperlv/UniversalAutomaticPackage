@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UniversalAutomaticPackage.ScriptSystem;
 
 namespace UniversalAutomaticPackage.PackageSystem.Remote
 {
@@ -67,6 +68,13 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
         }
         public override InstallationResult Install(ref double Progress)
         {
+            DirectoryInfo directoryInfo = new DirectoryInfo("./Temporary/" + Guid.NewGuid().ToString());
+            if(!directoryInfo.Exists) directoryInfo.Create();
+            //UAPScriptEnv.WorkingDirectory = directoryInfo;
+            LiteManagedHttpDownload.Downloader.DownloadToFileAsync(InstallationScript, Path.Combine(directoryInfo.FullName,"InstalScript.uapscript"));
+            UAPScript script = new UAPScript(Path.Combine(directoryInfo.FullName, "InstalScript.uapscript"));
+            script.WorkingDirectory = directoryInfo.CreateSubdirectory("WorkingSpace");
+            directoryInfo.CreateSubdirectory("TargetBinaries");
             return base.Install(ref Progress);
         }
     }
