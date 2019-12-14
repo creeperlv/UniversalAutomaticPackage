@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UniversalAutomaticPackage.Utilities\UniversalAutomaticPackage.Utilities.csproj" />
     <ProjectReference Include="..\UniversalAutomaticPackage\UniversalAutomaticPackage.csproj" />
   </ItemGroup>
 

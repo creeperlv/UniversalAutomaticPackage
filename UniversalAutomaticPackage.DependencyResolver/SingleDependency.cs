@@ -26,6 +26,12 @@ namespace UniversalAutomaticPackage.DependencyResolver
                         DepVersion = dep.Find();
                     }
                     break;
+                case "GIT":
+                    {
+                        git dep = new git();
+                        DepVersion = dep.Find();
+                    }
+                    break;
                 default:
                     Console.WriteLine("Dependency not in database.");
                     return true;
@@ -62,7 +68,11 @@ namespace UniversalAutomaticPackage.DependencyResolver
                         PowerShell dep = new PowerShell();
                         return dep.Install();
                     }
-                    break;
+                case "GIT":
+                    {
+                        git dep = new git();
+                        return dep.Install();
+                    }
                 default:
                     break;
             }

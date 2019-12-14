@@ -55,9 +55,15 @@ namespace UniversalAutomaticPackage.PackageSystem
         public string LicenseURL = "Undefined";
         public string UpdateOrigin="Undefined";
     }
+    public class Executable
+    {
+        public string fileName;
+        public string targetDisplayName;
+        
+    }
     public class BasePackage
     {
-        public string MainExecutable;
+        public Executable MainExecutable;
         /// <summary>
         /// Install method.
         /// </summary>

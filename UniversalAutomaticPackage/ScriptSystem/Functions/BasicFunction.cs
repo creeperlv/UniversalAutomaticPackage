@@ -172,13 +172,20 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
         }
         static bool SetMainExecutable(string s,UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
         {
+            UAPScriptEnv.Parent.MainExecutable = new PackageSystem.Executable();
             foreach (var item in parameters)
             {
                 if (item.Key == "-Soruce")
                 {
 
                     var exe = item.Value;
-                    UAPScriptEnv.Parent.MainExecutable = exe;
+                    UAPScriptEnv.Parent.MainExecutable.fileName = exe;
+                    return true;
+                }else if (item.Key == "-Target")
+                {
+
+                    var target = item.Value;
+                    UAPScriptEnv.Parent.MainExecutable.targetDisplayName = target;
                     return true;
                 }
             }

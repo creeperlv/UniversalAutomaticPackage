@@ -6,6 +6,7 @@ using UniversalAutomaticPackage.DependencyResolver;
 using UniversalAutomaticPackage.PackageSystem.Remote;
 using UniversalAutomaticPackage.ScriptSystem;
 using UniversalAutomaticPackage.ScriptSystem.Functions;
+using UniversalAutomaticPackage.Utilities;
 
 namespace UAPCLI
 {
@@ -103,8 +104,12 @@ namespace UAPCLI
                                 DirectoryInfo AppsFolder = new DirectoryInfo(AppFolder);
                                 //package
                                 var pkg = Path.Combine(AppsFolder.FullName,pkginfo.PackageID.ToString());
-                                Directory.Move(result.BinFolder.FullName, pkg);
                                 Console.WriteLine("Moveing from TemporaryFolder to assigned folder");
+                                BasicFunctions.CopyFolder(result.BinFolder.FullName, pkg);
+                                Console.WriteLine("Creating shortcut.");
+                                ShortcutCreator.Create(Path.Combine(pkg, package.MainExecutable.fileName), package.MainExecutable.targetDisplayName);
+                                //package.MainExecutable;
+                                //Directory.Move(result.BinFolder.FullName, pkg);
                             }
                         }
                         catch (Exception)
