@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UniversalAutomaticPackage.Configuration\UniversalAutomaticPackage.Configuration.csproj" />
     <ProjectReference Include="..\UniversalAutomaticPackage.DependencyResolver\UniversalAutomaticPackage.DependencyResolver.csproj" />
   </ItemGroup>
 

@@ -108,6 +108,7 @@ namespace UAPCLI
                                 BasicFunctions.CopyFolder(result.BinFolder.FullName, pkg);
                                 Console.WriteLine("Creating shortcut.");
                                 ShortcutCreator.Create(Path.Combine(pkg, package.MainExecutable.fileName), package.MainExecutable.targetDisplayName);
+                                Console.WriteLine("Registering Package.");
                                 //package.MainExecutable;
                                 //Directory.Move(result.BinFolder.FullName, pkg);
                             }
