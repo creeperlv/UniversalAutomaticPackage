@@ -123,8 +123,9 @@ namespace UAPCLI
                                 Console.WriteLine(""+result.DetailedMessage);
                             }
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
+                            Console.WriteLine("Error:"+e.Message);
                         }
                         break;
                     case "REMOVE":

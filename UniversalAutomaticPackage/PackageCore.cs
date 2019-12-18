@@ -4,6 +4,7 @@ using UniversalAutomaticPackage.DependencyResolver;
 using UniversalAutomaticPackage.PackageSystem;
 using UniversalAutomaticPackage.PackageSystem.Local;
 using UniversalAutomaticPackage.PackageSystem.Remote;
+using UniversalAutomaticPackage.ScriptSystem;
 
 namespace UniversalAutomaticPackage
 {
@@ -47,12 +48,13 @@ namespace UniversalAutomaticPackage
         }
         public BasePackage LoadPackage(string location)
         {
-            if (location.StartsWith("HTTP"))
+            if (location.ToUpper().StartsWith("HTTP"))
             {
                 //Remote Package.
                 var RemoteRequest = location.Split('?');
                 if (RemoteRequest[0].ToUpper().EndsWith("UAPMANIFEST"))
                 {
+                    Host.WriteLine("A manifest package.");
                     return new ManifestPackage(RemoteRequest[0]);
                 }
                 else

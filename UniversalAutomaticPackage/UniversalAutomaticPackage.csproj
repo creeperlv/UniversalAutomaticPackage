@@ -1,17 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LiteManagedHttpDownload" Version="1.0.0" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UniversalAutomaticPackage.Configuration\UniversalAutomaticPackage.Configuration.csproj" />
     <ProjectReference Include="..\UniversalAutomaticPackage.DependencyResolver\UniversalAutomaticPackage.DependencyResolver.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LiteManagedHttpDownload">
+      <HintPath>..\LiteManagedHttpDownload.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

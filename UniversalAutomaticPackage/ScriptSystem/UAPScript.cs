@@ -41,20 +41,28 @@ namespace UniversalAutomaticPackage.ScriptSystem
                     }
                 }
                 else{
-                    para = new List<KeyValuePair<string, string>>();
-                    if (func != null)
+                    try
                     {
-                        if(func(para1, this, para) != true)
+
+                        para = new List<KeyValuePair<string, string>>();
+                        if (func != null)
                         {
-                            Host.SetForeground(ConsoleColor.Red);
-                            Host.WriteLine("Script error, interrupted!");
-                            Host.SetForeground(ConsoleColor.White);
-                            return;
+                            if (func(para1, this, para) != true)
+                            {
+                                Host.SetForeground(ConsoleColor.Red);
+                                Host.WriteLine("Script error, interrupted!");
+                                Host.SetForeground(ConsoleColor.White);
+                                return;
+                            }
                         }
+                        lineNumber = 0;
+                        para1 = lines[i].Substring(lines[i].IndexOf(':') + 1);
+                        func = functions[lines[i].Substring(0, lines[i].IndexOf(":"))];
                     }
-                    lineNumber = 0;
-                    para1 = lines[i].Substring(lines[i].IndexOf(':') + 1);
-                    func = functions[lines[i].Substring(0, lines[i].IndexOf(":"))];
+                    catch (Exception)
+                    {
+
+                    }
                     //func()
                 }
             }

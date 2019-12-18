@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UniversalAutomaticPackage.DependencyResolver;
 using UniversalAutomaticPackage.ScriptSystem;
 
 namespace UniversalAutomaticPackage.PackageSystem.Remote
@@ -23,7 +24,7 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
         string InstallationScript = "";
         public ManifestPackage(string location)
         {
-            var progress = LiteManagedHttpDownload.Downloader.DownloadToText(location, "");
+            var progress = LiteManagedHttpDownload.Downloader.DownloadToTextAsync(location);
             progress.Wait();
             var content = progress.Result;
             StringReader stringReader = new StringReader(content);
@@ -56,7 +57,7 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
                 }
                 else if (line.StartsWith("InstallationScript="))
                 {
-                    InstallationScript = line.Substring("InstallationScript=".Length);
+                    InstallationScript = line.Substring("InstallationScript=".Length).Replace("{Platform}",SystemEnvironment.currentSystem.ToString());
                 }
                 //Process...
             }
@@ -72,7 +73,8 @@ namespace UniversalAutomaticPackage.PackageSystem.Remote
             DirectoryInfo directoryInfo = new DirectoryInfo("./Temporary/" + Guid.NewGuid().ToString());
             if(!directoryInfo.Exists) directoryInfo.Create();
             //UAPScriptEnv.WorkingDirectory = directoryInfo;
-            LiteManagedHttpDownload.Downloader.DownloadToFileAsync(InstallationScript, Path.Combine(directoryInfo.FullName,"InstalScript.uapscript"));
+            Host.WriteLine("Getting install script:"+ InstallationScript);
+            LiteManagedHttpDownload.Downloader.DownloadToFileAsync(InstallationScript, Path.Combine(directoryInfo.FullName,"InstalScript.uapscript")).Wait();
             UAPScript script = new UAPScript(Path.Combine(directoryInfo.FullName, "InstalScript.uapscript"),this);
             script.WorkingDirectory = directoryInfo.CreateSubdirectory("WorkingSpace");
             var d=directoryInfo.CreateSubdirectory("TargetBinaries");

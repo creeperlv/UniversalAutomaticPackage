@@ -9,9 +9,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UAPCLI", "UAPCLI\UAPCLI.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalAutomaticPackage.DependencyResolver", "UniversalAutomaticPackage.DependencyResolver\UniversalAutomaticPackage.DependencyResolver.csproj", "{D86E047C-836B-4C50-8135-23FFFA0E6956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalAutomaticPackage.Utilities", "UniversalAutomaticPackage.Utilities\UniversalAutomaticPackage.Utilities.csproj", "{FE45BDE1-D9D9-43B6-87D3-1E3D308F1CB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalAutomaticPackage.Utilities", "UniversalAutomaticPackage.Utilities\UniversalAutomaticPackage.Utilities.csproj", "{FE45BDE1-D9D9-43B6-87D3-1E3D308F1CB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalAutomaticPackage.Configuration", "UniversalAutomaticPackage.Configuration\UniversalAutomaticPackage.Configuration.csproj", "{CE36FCFF-9F16-4F91-96BD-A3BF01C99576}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalAutomaticPackage.Configuration", "UniversalAutomaticPackage.Configuration\UniversalAutomaticPackage.Configuration.csproj", "{CE36FCFF-9F16-4F91-96BD-A3BF01C99576}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{54D126C5-9097-45C1-852E-7DDFDFB9BF1B}"
+	ProjectSection(SolutionItems) = preProject
+		Install.Linux.sh = Install.Linux.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{DB0D4657-2A9D-4735-8CF3-3DFF81A54539}"
+	ProjectSection(SolutionItems) = preProject
+		LiteManagedHttpDownload.dll = LiteManagedHttpDownload.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
