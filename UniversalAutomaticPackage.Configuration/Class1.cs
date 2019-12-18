@@ -47,6 +47,21 @@ namespace UniversalAutomaticPackage.Configuration
                 Data[key].Add(value);
             }
         }
+        public void UpdateValue(string key,int id, string value)
+        {
+            if (Data.ContainsKey(key))
+            {
+                if (Data[key].Count > id)
+                {
+                    Data[key][id] = value;
+                }
+            }
+            else
+            {
+                Data.Add(key, new List<string>());
+                Data[key].Add(value);
+            }
+        }
         public void LoadFromFile()
         {
             try

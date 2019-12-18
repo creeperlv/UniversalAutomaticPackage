@@ -27,6 +27,13 @@ namespace UniversalAutomaticPackage.PackageSystem.Local
 
             }
         }
+        public static void RegisterPackage(string name,string location)
+        {
+            StandardConfigurationFile standardConfigurationFile = new StandardConfigurationFile("./Packages.index");
+            standardConfigurationFile.UpdateValue(name, 0, location);
+            //standardConfigurationFile.ove
+            //(name,location)
+        }
         public void Uninstall()
         {
 

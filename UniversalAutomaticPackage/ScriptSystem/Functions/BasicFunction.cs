@@ -15,17 +15,18 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
             UAPScript.functions.Add("Environment", CheckEnvironment);
             UAPScript.functions.Add("Set-Main-Executable", SetMainExecutable);
             UAPScript.functions.Add("Dependencies", CheckDependencies);
+            UAPScript.functions.Add("pwsh", PWSH);
         }
-        public static void CopyFolder(string src,string target)
+        public static void CopyFolder(string src, string target)
         {
             DirectoryInfo source = new DirectoryInfo(src);
-            DirectoryInfo tgt= new DirectoryInfo(target);
+            DirectoryInfo tgt = new DirectoryInfo(target);
             if (!tgt.Exists) tgt.Create();
             {
                 var folders = source.EnumerateDirectories();
                 foreach (var item in folders)
                 {
-                    var sub=tgt.CreateSubdirectory(item.Name);
+                    var sub = tgt.CreateSubdirectory(item.Name);
                     CopyFolder(item.FullName, sub.FullName);
                 }
 
@@ -38,16 +39,38 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
                 }
             }
         }
-        public static bool CopyFolder(string s,UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
+        public static bool PWSH(string s, UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
         {
-            string src="";
-            string tgt="";
+            string ScriptContent = "";
+            foreach (var item in parameters)
+            {
+                if (ScriptContent == "")
+                {
+
+                    ScriptContent += item.Value;
+                }
+                else
+                {
+
+                    ScriptContent += Environment.NewLine + item.Value;
+                }
+            }
+            File.WriteAllText(Path.Combine(UAPScriptEnv.WorkingDirectory.FullName, "temp.ps1"), ScriptContent);
+            var process=Process.Start("pwsh "+ $" -wd \"{UAPScriptEnv.WorkingDirectory}\" \"{Path.Combine(UAPScriptEnv.WorkingDirectory.FullName, "temp.ps1")}\"");
+            process.WaitForExit();
+            return process.ExitCode==0?true:false;
+        }
+        public static bool CopyFolder(string s, UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
+        {
+            string src = "";
+            string tgt = "";
             foreach (var item in parameters)
             {
                 if (item.Key == "-Source")
                 {
                     src = item.Value;
-                }else
+                }
+                else
                 if (item.Key == "-Target")
                 {
                     src = item.Value;
@@ -71,24 +94,24 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
                 if (!dependency.Check())
                 {
                     Host.SetForeground(ConsoleColor.Red);
-                    Host.WriteLine("Missing dependency:"+item.Key);
+                    Host.WriteLine("Missing dependency:" + item.Key);
                     Host.SetForeground(ConsoleColor.White);
                 }
             }
             return true;
         }
-        static bool ScriptType(string s,UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
+        static bool ScriptType(string s, UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
         {
             if (s.ToUpper().Trim().Equals("INSTALL"))
             {
-             
+
             }
             return true;
         }
-        static bool CheckEnvironment(string s,UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
+        static bool CheckEnvironment(string s, UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
         {
             Host.WriteLine("Gathering system information...");
-            long memory=0;
+            long memory = 0;
             {
                 //Run cmd to judge memory.
                 {
@@ -120,12 +143,12 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
                                 processStartInfo.RedirectStandardOutput = true;
                                 var p = Process.Start(processStartInfo);
                                 var outs = p.StandardOutput;
-                                string line= outs.ReadLine();
-                                line= line.Substring(line.IndexOf(":") + 1);
+                                string line = outs.ReadLine();
+                                line = line.Substring(line.IndexOf(":") + 1);
                                 line = line.Substring(0, line.Length - 3);
                                 line = line.Trim();
                                 p.WaitForExit();
-                                memory=(int.Parse(line))/ (1024 * 1024);
+                                memory = (int.Parse(line)) / (1024 * 1024);
                             }
                             break;
                         case SystemType.MacOS:
@@ -143,7 +166,7 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
                     case "-SystemVersion":
                         {
                             Version min = new Version(item.Value.Trim());
-                            if (min.CompareTo(SystemEnvironment.SystemVersion)<0)
+                            if (min.CompareTo(SystemEnvironment.SystemVersion) < 0)
                             {
                                 Host.SetForeground(ConsoleColor.Red);
                                 Host.WriteLine("Your OS is too old for this software.");
@@ -154,7 +177,7 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
                         break;
                     case "-Memory":
                         {
-                            long minMem=long.Parse(item.Value);
+                            long minMem = long.Parse(item.Value);
                             if (memory < minMem)
                             {
                                 Host.SetForeground(ConsoleColor.Red);
@@ -170,7 +193,7 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
             }
             return true;
         }
-        static bool SetMainExecutable(string s,UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
+        static bool SetMainExecutable(string s, UAPScript UAPScriptEnv, List<KeyValuePair<string, string>> parameters)
         {
             UAPScriptEnv.Parent.MainExecutable = new PackageSystem.Executable();
             foreach (var item in parameters)
@@ -181,7 +204,8 @@ namespace UniversalAutomaticPackage.ScriptSystem.Functions
                     var exe = item.Value;
                     UAPScriptEnv.Parent.MainExecutable.fileName = exe;
                     return true;
-                }else if (item.Key == "-Target")
+                }
+                else if (item.Key == "-Target")
                 {
 
                     var target = item.Value;

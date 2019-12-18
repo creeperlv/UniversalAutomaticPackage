@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using UniversalAutomaticPackage;
 using UniversalAutomaticPackage.DependencyResolver;
+using UniversalAutomaticPackage.PackageSystem.Local;
 using UniversalAutomaticPackage.PackageSystem.Remote;
 using UniversalAutomaticPackage.ScriptSystem;
 using UniversalAutomaticPackage.ScriptSystem.Functions;
@@ -109,8 +110,17 @@ namespace UAPCLI
                                 Console.WriteLine("Creating shortcut.");
                                 ShortcutCreator.Create(Path.Combine(pkg, package.MainExecutable.fileName), package.MainExecutable.targetDisplayName);
                                 Console.WriteLine("Registering Package.");
+                                InstalledPackage.RegisterPackage(pkginfo.FriendlyName, pkg);
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("Completed.");
+                                Console.ForegroundColor = ConsoleColor.White;
                                 //package.MainExecutable;
                                 //Directory.Move(result.BinFolder.FullName, pkg);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed.");
+                                Console.WriteLine(""+result.DetailedMessage);
                             }
                         }
                         catch (Exception)
