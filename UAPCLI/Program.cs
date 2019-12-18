@@ -50,9 +50,8 @@ namespace UAPCLI
         static void Side()
         {
             //RuntimeInformation.OSArchitecture == Architecture.X64
-            Console.WriteLine(RuntimeInformation.OSDescription);
-            System.Diagnostics.PerformanceCounter performance = new System.Diagnostics.PerformanceCounter();
-            Console.WriteLine(SystemEnvironment.SystemVersion.ToString());
+            //Console.WriteLine(RuntimeInformation.OSDescription);
+            //Console.WriteLine(SystemEnvironment.SystemVersion.ToString());
         }
         static void Main(string[] args)
         {
